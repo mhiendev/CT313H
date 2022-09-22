@@ -37,7 +37,7 @@ app.use((err, req, res, next) => {
     //The centralized error handling middleware.
     //In any route handler, calling next(error)
     //   will passs to this error handling middleware.
-    return res.status(err.StatusCode || 500).json({
+    return res.status(err.statusCode || 500).json({
         message: err.message || 'Internal Server Error',
     });
 });

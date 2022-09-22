@@ -5,5 +5,7 @@ module.exports = {
         es2022: true,
     },
     extends: 'eslint:recommended',
-    rules: {},
+    rules: {
+        'no-unused-vars': 'off'
+    },
 };
