@@ -22,5 +22,18 @@ class ContactService{
         const [id] = await this.contacts.insert(contact);
         return {id, ...contact};
     }
+
+    async all(){
+        return await this.contacts.select('*');
+    }
+
+    async findByName(name){
+        return await this.contacts
+            .where('name', 'like', `%${name}%`)
+            .select('*');
+    }
+    async findById(id){
+        return await this.contacts.where('id', id).select("*").first();
+    }
 }
 module.exports = ContactService;

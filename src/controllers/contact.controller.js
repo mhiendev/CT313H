@@ -48,7 +48,46 @@ exports.create = async(req, res, next) => {
     }
 };
 
-// Find a single contact with an id
-exports.findOne = async (req, res) => {
+//Retrieve all contacts of a user from the database
+exports.findAll = async (req, res, next) => {
+    let contacts = []
 
+    try {
+        const contactService = new ContactService();
+        const {name} = req.query;
+        if(name){
+            contacts = await contactService.findByName(name);
+        } else {
+            contacts = await contactService.all();
+        }
+    }catch (error) {
+        console.log(error);
+        return next(
+            new ApiError(500, 'An error ocurred while retrieving contacts')
+        );
+    }
+    return res.send(contacts);
 }
+
+
+
+
+// Find a single contact with an id
+exports.findOne = async (req, res, next) => {
+    try{
+        const contactService = new ContactService();
+        const contact = await contactService.findById(req.params.id);
+        if(!contact){
+            return next(new ApiError(404, 'Contact not found'));
+        }
+        return res.send(contact);
+    }catch(error){
+        console.log(error);
+        return next(
+            new ApiError(
+                500,
+                `Error retrieving contact with id=${req.params.id}`
+            )
+        );
+    }
+};
