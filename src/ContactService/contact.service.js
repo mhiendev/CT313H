@@ -35,5 +35,9 @@ class ContactService{
     async findById(id){
         return await this.contacts.where('id', id).select("*").first();
     }
+    async update(id, payload){
+        const update = this.#getContact(payload);
+        return await this.contacts.where('id', id).update(update);
+    }
 }
 module.exports = ContactService;
