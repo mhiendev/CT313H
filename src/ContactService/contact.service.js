@@ -39,5 +39,13 @@ class ContactService{
         const update = this.#getContact(payload);
         return await this.contacts.where('id', id).update(update);
     }
+
+    async delete(id){
+        return await this.contacts.where('id', id).del();
+    }
+
+    async deleteAll(id){
+        return await this.contacts.del();
+    }
 }
 module.exports = ContactService;
